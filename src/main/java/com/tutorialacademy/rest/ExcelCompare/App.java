@@ -100,13 +100,67 @@ public class App
 			workbookori.close();
 			workbookmod.close();
 		}
-		 catch (FileNotFoundException e) {
+		catch (FileNotFoundException e) {
 	            e.printStackTrace();
-	        } catch (IOException e) {
+	        } 
+		catch (IOException e) {
 	            e.printStackTrace();
 	        }		
-		}
+	}
+    
+    public int checkEqualWorkSheets(String szFile1, String szFile2) throws IOException {
+    	int iReturn = 0;
+    	try {
+    		// get File 1
+			FileInputStream fileWS1 = new FileInputStream(new File(szFile1));
+			XSSFWorkbook wb1 = new XSSFWorkbook(fileWS1);
+			
+			// get File 2
+			FileInputStream fileWS2 = new FileInputStream(szFile2);
+			XSSFWorkbook wb2 = new XSSFWorkbook(fileWS2);
+			
+			iReturn = checkEqualWorkBook(wb1, wb2, iReturn);
+    	}
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return iReturn;
 
+    }
+    
+    private int checkEqualWorkBook(XSSFWorkbook pwb1, XSSFWorkbook pwb2, int piReturn) {
+    	try {
+    		
+    		for (int iNumSheets = 0; iNumSheets < pwb1.getNumberOfSheets(); iNumSheets++) {
+    			Sheet sh1 = pwb1.getSheetAt(0);   
+    			Sheet sh2 = pwb2.getSheetAt(0);
+    			piReturn = checkEqualSheet(sh1, sh2, piReturn);    		}
+    	}
+    	catch (Exception e) {
+    		piReturn += 1;
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	return piReturn;
+    }
+
+    private int checkEqualSheet(Sheet psh1, Sheet psh2, int piReturn) {
+    	try {
+			Iterator<Row> rowIterator1 = psh1.iterator();
+			while (rowIterator1.hasNext()){
+				Row row1 = rowIterator1.next();
+				Row row2 = psh2.getRow(row1.getRowNum());
+			}
+			    
+   		
+    	}
+    	catch (Exception e) {
+    		piReturn += 1;
+    	}
+    	return  piReturn;
+    }
 
 
 }
