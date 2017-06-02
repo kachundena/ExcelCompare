@@ -16,17 +16,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * Hello world!
  *
  */
-public class App 
+class App 
 {
-    public CellStyle styleMod;
-    public void main(String[] args) throws IOException {
+    public static CellStyle styleMod;
+    public static void main(String[] args) throws IOException {
 			String szFile1 = "prestamo.xlsx";
 			String szFile2 = "prestamo2.xlsx";
 			int iReturn = checkEqualWorkSheets (szFile1, szFile2);
 			System.out.println("Fin. Número de diferencias: " + iReturn);
 	}
     
-    public int checkEqualWorkSheets(String szFile1, String szFile2) throws IOException {
+    public static int checkEqualWorkSheets(String szFile1, String szFile2) throws IOException {
     	int iReturn = 0;
     	try {
     		// get File 1
@@ -37,7 +37,7 @@ public class App
 			FileInputStream fileWS2 = new FileInputStream(szFile2);
 			XSSFWorkbook wb2 = new XSSFWorkbook(fileWS2);
 
-			CellStyle styleMod = wb2.createCellStyle();
+			styleMod = wb2.createCellStyle();
 			styleMod.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
 			styleMod.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			
@@ -57,7 +57,7 @@ public class App
 
     }
     
-    private int checkEqualWorkBook(XSSFWorkbook pwb1, XSSFWorkbook pwb2, int piReturn) {
+    private static int checkEqualWorkBook(XSSFWorkbook pwb1, XSSFWorkbook pwb2, int piReturn) {
     	try {
     		
     		for (int iNumSheets = 0; iNumSheets < pwb1.getNumberOfSheets(); iNumSheets++) {
@@ -72,7 +72,7 @@ public class App
     	return piReturn;
     }
 
-    private int checkEqualSheet(Sheet psh1, Sheet psh2, int piReturn) {
+    private static int checkEqualSheet(Sheet psh1, Sheet psh2, int piReturn) {
     	try {
 			Iterator<Row> rowIterator1 = psh1.iterator();
 			while (rowIterator1.hasNext()){
@@ -88,7 +88,7 @@ public class App
     	return  piReturn;
     }
     
-    private int checkEqualRow (Row prw1, Row prw2, int piReturn) {
+    private static int checkEqualRow (Row prw1, Row prw2, int piReturn) {
     	try {
 	        Iterator<Cell> cellIterator1 = prw1.cellIterator();
 		    while (cellIterator1.hasNext()) {
@@ -104,7 +104,7 @@ public class App
     	return piReturn;
     }
     	
-    private int checkEqualCell (Cell pcl1, Cell pcl2, int piReturn) {
+    private static int checkEqualCell (Cell pcl1, Cell pcl2, int piReturn) {
     	try {
     		if (pcl1 != null && pcl2 != null)
             {
